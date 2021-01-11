@@ -15,16 +15,17 @@ namespace Laba_2
 			public void Execute()
 			{
 				Console.WriteLine($"{this.GetType().FullName}\n");
+				Console.WriteLine("Создать однонаправленный список, состоящий из n целых чисел. Преобразовать его в два списка: первый список должен содержать только четные числа, второй − нечетные");
 
 				var linkedList = FillList();
 
 				Console.WriteLine($"Исходный список:\t{string.Join(" ", linkedList)}");
 
 				var evenList = CreateLinkedListWithOnlyEvenItems(linkedList);
-				Console.WriteLine($"Исходный список EVEN:\t{string.Join(" ", evenList)}");
+				Console.WriteLine($"Исходный список четных значений:\t{string.Join(" ", evenList)}");
 
 				var oddList = CreateLinkedListWithOnlyOddItems(linkedList);
-				Console.WriteLine($"Исходный список ODD:\t{string.Join(" ", oddList)}");
+				Console.WriteLine($"Исходный список нечетных значений:\t{string.Join(" ", oddList)}");
 			}
 
 			private LinkedList<int> FillList()

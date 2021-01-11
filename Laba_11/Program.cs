@@ -8,14 +8,22 @@ namespace Laba_11
         {
             AVLTree<int> Oak = new AVLTree<int>();
             //                                            10                              10                                             
-            Oak.Add(10);  //                            /   \                           /   \
-            Oak.Add(3);   //                           /     \                         /     \
-            Oak.Add(2);   //                          3      12      ====>            3       15
-            Oak.Add(4);   //                         / \     / \                     / \      / \
-            Oak.Add(12);  //                        2   4  null 15                  2   4    12  25
-            Oak.Add(15);  //                                      \              
-            Oak.Add(11);  //                                       25
-            Oak.Add(25);  //
+            //Oak.Add(10);  //                            /   \                           /   \
+            //Oak.Add(3);   //                           /     \                         /     \
+            //Oak.Add(2);   //                          3      12      ====>            3       15
+            //Oak.Add(4);   //                         / \     / \                     / \      / \
+            //Oak.Add(12);  //                        2   4  null 15                  2   4    12  25
+            //Oak.Add(15);  //                                      \              
+            //Oak.Add(11);  //                                       25
+            //Oak.Add(25);  //
+
+			Console.WriteLine("Введите 10 чисел дерева");
+			for (int i = 0; i < 10; i++)
+			{
+				Console.WriteLine("Введите целое число");
+                var item = Convert.ToInt32(Console.ReadLine());
+                Oak.Add(item);
+            }
             Console.WriteLine("Дерево");
             foreach (var item in Oak)
             {

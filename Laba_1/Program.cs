@@ -82,7 +82,7 @@ namespace Laba_1
             car.CreatedAt = DateTime.Parse(Console.ReadLine());
 
             Console.WriteLine("Введите объем двигателя автомобиля:\n");
-            car.EngineV = Convert.ToInt32(Console.ReadLine());
+            car.EngineV = Convert.ToDouble(Console.ReadLine().Replace('.', ','));
 
             Console.WriteLine("Введите максимальную скорость автомобиля:\n");
             car.SpeedMax = Convert.ToInt32(Console.ReadLine());
