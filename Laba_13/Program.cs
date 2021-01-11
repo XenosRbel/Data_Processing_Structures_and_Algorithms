@@ -46,7 +46,7 @@ namespace Laba_13
             Console.WriteLine();
             if (path.Count == 0)
             {
-                Console.WriteLine("You shall not pass!");
+                Console.WriteLine("Ты не пройдешь");
             }
             else
             {

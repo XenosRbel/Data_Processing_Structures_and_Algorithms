@@ -32,6 +32,7 @@ namespace Laba_6
             Console.WriteLine($"Результат поиска значения \"{searchValue}\":\t" +
                 $"{numbers.Contains(searchValue)}");
 
+			Console.WriteLine("Удаление элемента");
             numbers.Dequeue();
 
             foreach (string number in numbers)

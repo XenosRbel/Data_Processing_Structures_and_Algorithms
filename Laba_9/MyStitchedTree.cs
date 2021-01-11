@@ -265,6 +265,4 @@ namespace Laba_9
             }
         }
     }
-
-}
 }

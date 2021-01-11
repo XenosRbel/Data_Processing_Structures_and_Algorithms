@@ -1,4 +1,6 @@
-﻿namespace Laba_15
+﻿using System.Collections.Generic;
+
+namespace Laba_15
 {
 	partial class Program
 	{

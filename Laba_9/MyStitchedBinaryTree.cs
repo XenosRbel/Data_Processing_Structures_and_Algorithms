@@ -2,10 +2,10 @@
 
 namespace Laba_9
 {
-	partial class Program
-	{
-		// Прошитое дерево
-		public class MyStitchedBinaryTree
+    partial class Program
+    {
+        // Прошитое дерево
+        public class MyStitchedBinaryTree
         {
             // Основной элемент
             private MyStitchedTree main;
@@ -293,6 +293,4 @@ namespace Laba_9
 
         }
     }
-
-}
 }

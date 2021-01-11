@@ -4,57 +4,107 @@ using System.Linq;
 
 namespace Laba_7
 {
-    class Program
+   class Program
     {
-        static void Main(string[] args)
+        static bool TransformationToPostfix(string expression, out string postResult)
         {
-            Console.WriteLine("Введите выражение");
-			var exp = Console.ReadLine();
-            //var exp = CreateNormalExpression("a / (b - c) * (d + e)", 8.6, 2.4, 5.1, 0.3, 7.9);
+            // Инициализируем стек
+            Stack<char> stack = new Stack<char>();
 
-			var result = ReversePolishNotation.Calculate(exp);
+            postResult = default(string);
 
-            Console.WriteLine($"Результат:\t{result.ToString("N3")}");
+            // Проходим циклом по выражению
+            for (int i = 0; i < expression.Length; i++)
+            {
+                // Символ строки
+                char thisEl = expression[i];
 
-            Console.ReadKey();
+                if (thisEl == '(')
+                {
+                    // Ищем закрывающую скобку
+                    var bracketEndIndex = expression.IndexOf(')');
+
+                    // Выбираем строку в скобках
+                    var bracketStr = expression.Substring(i + 1, bracketEndIndex - 1);
+
+                    // Для вложенности используем рекурсию
+                    TransformationToPostfix(bracketStr, out string postResultCld);
+
+                    // Добавляем результат в expression
+                    postResult += postResultCld;
+
+                    // Перенос символа.
+                    i = bracketEndIndex;
+                }
+                else if (thisEl == '*' || thisEl == '/' || thisEl == '+' || thisEl == '-')
+                {
+                    if (stack.Count <= 0)
+                    {
+                        // Добавляем знак выражения в стек
+                        stack.Push(thisEl);
+                    }
+                    else
+                    {
+                        // Если деление или умножение (приоритетнее)
+                        if (stack.Peek() == '*' || stack.Peek() == '/')
+                        {
+                            // Добавляем знак и удаляем элемент из стека
+                            postResult += stack.Pop();
+                            i--;
+                        }
+                        else
+                        {
+                            if (thisEl == '+' || thisEl == '-')
+                            {
+                                // Добавляем знак и удаляем элемент из стека
+                                postResult += stack.Pop();
+
+                            }
+
+                            // Добавляем знак в стек
+                            stack.Push(thisEl);
+                        }
+                    }
+                }
+                else
+                {
+                    // Добавляем симовлы в стек
+                    postResult += thisEl;
+                }
+            }
+
+            for (int j = 0; j < stack.Count; j++)
+            {
+                // Добавляем остальные элементы в стеке в результат
+                postResult += stack.Pop();
+            }
+
+            return true;
         }
 
-		public static IEnumerable<object[]> ArrayData()
-		{
-			yield return new object[] { "a / (b - c) * (d + e)", 8.6, 2.4, 5.1, 0.3, 7.9, "-26.119" };
-			yield return new object[] { "a * (b - c) / (d + e)", 0.5, 6.1, 8.9, 2.4, 7.3, "-0.144" };
-		}
+        static void Main(string[] args)
+        {
+            // Тестовое выражение
+            string expression = "(A*B)+C-D";
 
-		public static string CreateNormalExpression(string expression, double a, double b, double c, double d, double e)
-		{
-			var result = string.Empty;
-			var chars = expression.ToCharArray().Select(v => Convert.ToString(v)).ToArray();
+            // Метод трансформации выражения
+            TransformationToPostfix(expression, out string postResult);
 
-			for (int i = 0; i < chars.Length; i++)
-			{
-				switch (chars[i])
-				{
-					case "a":
-						chars[i] = a.ToString();
-						continue;
-					case "b":
-						chars[i] = b.ToString();
-						continue;
-					case "c":
-						chars[i] = c.ToString();
-						continue;
-					case "d":
-						chars[i] = d.ToString();
-						continue;
-					case "e":
-						chars[i] = e.ToString();
-						continue;
-					default:
-						continue;
-				}
-			}
-			result = string.Join("", chars);
-			return result;
-		}
-	}
+            var preResultArr = postResult.ToCharArray();
+
+            // Инвертируем полученное выражение, для получения префиксной формы
+            Array.Reverse(preResultArr);
+
+            var preResult = new string(preResultArr);
+
+            // Инфиксное выражение 
+            Console.WriteLine("Инфиксное выражение: " + expression);
+
+            // Префиксное выражение
+            Console.WriteLine("Префиксное выражение: " + preResult);
+
+            // Постфиксное выражение
+            Console.WriteLine(" Постфиксное выражение: " + postResult);
+        }
+    }
 }

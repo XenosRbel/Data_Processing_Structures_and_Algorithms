@@ -14,7 +14,9 @@ namespace Laba_9
             // Заполняем дерево значениями
             for (int i = 1; i <= 10; i++)
             {
-                myStitchedBinaryTree.Add(i);
+				Console.WriteLine("Введите целое число");
+                var item = Convert.ToInt32(Console.ReadLine());
+                myStitchedBinaryTree.Add(item);
             }
             Console.WriteLine("Прямой порядок следования элементов: ");
             myStitchedBinaryTree.InOrderTraversal();
@@ -22,9 +24,13 @@ namespace Laba_9
             Console.WriteLine("\n\nСимметричный порядок следования элементов: ");
             myStitchedBinaryTree.PreorderTraversal();
 
-            Console.WriteLine($"\n\nРезультат поиска: {myStitchedBinaryTree.Search(1).Data}");
+			Console.WriteLine("Поиск элемента. \nВведите элемент");
+            var itemForSearch = Convert.ToInt32(Console.ReadLine());
+            Console.WriteLine($"\n\nРезультат поиска: {myStitchedBinaryTree.Search(itemForSearch).Data}");
 
-            myStitchedBinaryTree.Remove(2);
+            Console.WriteLine("Поиск Удаления. \nВведите элемент");
+            var itemForDelete = Convert.ToInt32(Console.ReadLine());
+            myStitchedBinaryTree.Remove(itemForDelete);
 
             Console.WriteLine("\nПрямой порядок следования элементов после удаления:");
             myStitchedBinaryTree.InOrderTraversal();
