@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text;
 
 namespace Laba_13
 {
@@ -33,7 +34,14 @@ namespace Laba_13
             {
                 Console.WriteLine($"visited {this.Name}");
             }
-        }
+
+			public override string ToString()
+			{
+                StringBuilder str = new StringBuilder();
+
+                return str.ToString();
+			}
+		}
 
     }
 }

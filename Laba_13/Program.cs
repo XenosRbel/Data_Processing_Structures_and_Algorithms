@@ -8,15 +8,15 @@ namespace Laba_13
 	{
 		static void Main(string[] args)
 		{
-            var n01 = new Node("01");
-            var n02 = new Node("02");
-            var n03 = new Node("03");
-            var n04 = new Node("04");
-            var n05 = new Node("05");
-            var n06 = new Node("06");
-            var n07 = new Node("07");
-            var n08 = new Node("08");
-            var n09 = new Node("09");
+            var n01 = new Node("1");
+            var n02 = new Node("2");
+            var n03 = new Node("3");
+            var n04 = new Node("4");
+            var n05 = new Node("5");
+            var n06 = new Node("6");
+            var n07 = new Node("7");
+            var n08 = new Node("8");
+            var n09 = new Node("9");
             var n10 = new Node("10");
             var n11 = new Node("11");
             var n12 = new Node("12");
@@ -36,8 +36,13 @@ namespace Laba_13
             n12.AddChildren(n13);
             n14.AddChildren(n15);
 
+            var ss = new List<Node> { n01, n02, n03, n04, n05, n06, n07, n08, n09, n10, n11, n12, n13, n14, n15 };
             var search = new DepthFirstSearch();
-            var path = search.DLS(n06, n13, 6);
+
+			Console.WriteLine("Укажите вершину-источник");
+            var verh = Console.ReadLine();
+
+            var path = search.DLS(ss.First(item => item.Name == verh), n13, 6);
             PrintPath(path);
         }
 

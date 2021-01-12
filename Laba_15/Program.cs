@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 
 namespace Laba_15
 {
@@ -8,33 +10,36 @@ namespace Laba_15
 		static void Main(string[] args)
 		{
             // Ключи
+            var testKeyData = File.ReadAllText("testKeyData.txt").Split(' ');
             //var testKeyData = new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 120 };
-            var testKeyData = new List<int>();
+            //var testKeyData = new List<int>();
             // Указатели
-            var testPointerData = new int[] { 10, 9, 8, 7, 6, 5, 4, 3, 2, 1 };
+            var testPointerData = File.ReadAllText("testPointerData.txt").Split(' ').Select(item => Convert.ToInt32(item)).ToArray();
+            //var testPointerData = new int[] { 10, 9, 8, 7, 6, 5, 4, 3, 2, 1 };
 
             // Создание дерева
             var BT = new BTree<int, int>(2);
 
-			Console.WriteLine("Ввод значений дерева");
-			for (int i = 0; i < 10; i++)
+			Console.WriteLine("Ввод значений дерева. Сколько элементов загрузить? (От 10 до 15)");
+            var N = Convert.ToInt32(Console.ReadLine());
+			Console.WriteLine($"{(N <= testKeyData.Length ? "Размер верный" : "Ошибка размера")}");
+
+			if (N <= testKeyData.Length)
 			{
-				Console.WriteLine("Введите целое значение");
-                var item = Convert.ToInt32(Console.ReadLine());
-                testKeyData.Add(item);
-            }
+                for (var i = 0; i < N; i++)
+                {
+                    // Добавление всех значений из массивов.
+                    BT.Insert(Convert.ToInt32(testKeyData[i]), testPointerData[i]);
+                }
 
-            for (var i = 0; i < testKeyData.Count; i++)
-            {
-                // Добавление всех значений из массивов.
-                BT.Insert(testKeyData[i], testPointerData[i]);
-            }
+                PrintTree(BT, "Начальное дерево: ");
 
-            PrintTree(BT, "Начальное дерево: ");
+                Console.WriteLine("Введите элемент для удаления");
+                var forDel = Convert.ToInt32(Console.ReadLine());
+                BT.Delete(forDel);
 
-            BT.Delete(10);
-
-            PrintTree(BT, "\nДерево после удаления 10 элемента: ");
+                PrintTree(BT, $"\nДерево после удаления {forDel} элемента: ");
+            }         
         }
 
         // Вывод дерева

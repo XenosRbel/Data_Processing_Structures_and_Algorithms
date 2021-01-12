@@ -17,8 +17,9 @@ namespace Laba_11
             //Oak.Add(11);  //                                       25
             //Oak.Add(25);  //
 
-			Console.WriteLine("Введите 10 чисел дерева");
-			for (int i = 0; i < 10; i++)
+			Console.WriteLine("Введите n чисел дерева");
+            var ii = Convert.ToInt32(Console.ReadLine());
+			for (int i = 0; i < ii; i++)
 			{
 				Console.WriteLine("Введите целое число");
                 var item = Convert.ToInt32(Console.ReadLine());

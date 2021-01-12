@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 namespace Laba_14
@@ -118,15 +119,17 @@ namespace Laba_14
                     throw new ArgumentNullException(nameof(title));
                 }
 
+                var output = new List<string>();
                 foreach (var hashMaps in hashTable.HashMaps)
                 {
                     // Выводим все значения хранимые под этим хешем.
                     foreach (var value in hashMaps.Value)
                     {
                         Console.WriteLine($"\t{value.Key} - {value.Value}");
+                        output.Add($"\t{value.Key} - {value.Value}");
                     }
                 }
-
+                File.WriteAllLines("output.txt", output);
                 Console.WriteLine();
             }
         }

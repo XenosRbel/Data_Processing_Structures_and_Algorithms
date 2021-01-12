@@ -10,6 +10,7 @@ namespace Laba_10
         private List<Node> nodes = new List<Node>();
         public Node Root { get; set; }
         public Dictionary<char, int> Frequencies = new Dictionary<char, int>();
+        public List<string> CodesChar = new List<string>();
 
         public void Build(string source)
         {
@@ -44,7 +45,7 @@ namespace Laba_10
                         Frequency = taken[0].Frequency + taken[1].Frequency,
                         Left = taken[0],
                         Right = taken[1]
-                    };
+                    };            
 
                     nodes.Remove(taken[0]);
                     nodes.Remove(taken[1]);
@@ -65,6 +66,7 @@ namespace Laba_10
             {
                 List<bool> encodedSymbol = this.Root.Traverse(source[i], new List<bool>());
                 encodedSource.AddRange(encodedSymbol);
+                CodesChar.Add(Output(encodedSymbol));
                 Console.WriteLine($"Символ - {source[i]}, код - {Output(encodedSymbol)}");
             }
 

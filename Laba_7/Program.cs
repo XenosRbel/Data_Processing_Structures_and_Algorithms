@@ -85,7 +85,7 @@ namespace Laba_7
         static void Main(string[] args)
         {
             // Тестовое выражение
-            string expression = "(A*B)+C-D";
+            string expression = Console.ReadLine();
 
             // Метод трансформации выражения
             TransformationToPostfix(expression, out string postResult);

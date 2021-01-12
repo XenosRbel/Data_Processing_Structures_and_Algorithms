@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 
 namespace Laba_14
 {
@@ -9,20 +10,12 @@ namespace Laba_14
             // Инициилизируем хеш таблицу
             MyHashMap<int, string> TestDictionary = new MyHashMap<int, string>();
 
+            var lines = File.ReadAllLines("input.txt");
 			// Добавим слова
-			Console.WriteLine("Добавим 5 слов");
-			for (int i = 1; i < 5; i++)
+			for (int i = 0; i < lines.Length; i++)
 			{
-				Console.WriteLine("Введите слово");
-                var item = Console.ReadLine();
-                TestDictionary.Add(i, item);
+                TestDictionary.Add(i, lines[i]);
             }
-            //TestDictionary.Add(1, "Petrushka");
-            //TestDictionary.Add(2, "Morkovka");
-            //TestDictionary.Add(3, "Svekla");
-            //TestDictionary.Add(4, "Lyk");
-            //TestDictionary.Add(5, "Basilik");
-            //TestDictionary.Add(6, "Kartoshka");
 
             // Выводим хешированную таблицу
             Console.WriteLine("Изначальная таблица: ");
@@ -41,6 +34,7 @@ namespace Laba_14
             // Результат после удаления
             Console.WriteLine("Результат после удаления: ");
             TestDictionary.ShowHashTable(TestDictionary, "nameTable");
+
         }
     }
 }
