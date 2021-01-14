@@ -4,107 +4,160 @@ using System.Linq;
 
 namespace Laba_7
 {
-   class Program
+    class Program
     {
-        static bool TransformationToPostfix(string expression, out string postResult)
+        static void Main(string[] args)
         {
-            // Инициализируем стек
-            Stack<char> stack = new Stack<char>();
+			Console.WriteLine("Введите строку в инфиксном виде");
+            string infix = Console.ReadLine();
+            var tokens = infix.ToCharArray();
 
-            postResult = default(string);
+            var postfix = Postfix(tokens);
 
-            // Проходим циклом по выражению
-            for (int i = 0; i < expression.Length; i++)
-            {
-                // Символ строки
-                char thisEl = expression[i];
+            Console.WriteLine($"Постфиксная: {postfix}");
 
-                if (thisEl == '(')
+            var prefix = Prefix(tokens);
+            Console.WriteLine($"Префиксная: {prefix}");
+                
+            Console.ReadLine();
+        }
+
+        private static string Prefix(char[] tokens)
+        {
+            Array.Reverse(tokens);
+
+			for (int i = 0; i < tokens.Length; i++)
+			{
+                var c = tokens[i];
+
+                if (c == '(')
                 {
-                    // Ищем закрывающую скобку
-                    var bracketEndIndex = expression.IndexOf(')');
-
-                    // Выбираем строку в скобках
-                    var bracketStr = expression.Substring(i + 1, bracketEndIndex - 1);
-
-                    // Для вложенности используем рекурсию
-                    TransformationToPostfix(bracketStr, out string postResultCld);
-
-                    // Добавляем результат в expression
-                    postResult += postResultCld;
-
-                    // Перенос символа.
-                    i = bracketEndIndex;
+                    tokens[i] = ')';
+                    i++;
+                } else if (c == ')')
+				{
+                    tokens[i] = '(';
+                    i++;
                 }
-                else if (thisEl == '*' || thisEl == '/' || thisEl == '+' || thisEl == '-')
+            }
+
+            Stack<char> s = new Stack<char>();
+            List<char> outputList = new List<char>();
+            foreach (var c in tokens)
+            {
+                if (char.IsLetterOrDigit(c))
                 {
-                    if (stack.Count <= 0)
+                    outputList.Add(c);
+                }
+                else if (c == '(')
+                {
+                    s.Push(c);
+                }
+                else if (c == ')')
+                {
+                    while (s.Count != 0 && (s.Peek() != '('))
                     {
-                        // Добавляем знак выражения в стек
-                        stack.Push(thisEl);
+                        outputList.Add(s.Pop());
                     }
-                    else
-                    {
-                        // Если деление или умножение (приоритетнее)
-                        if (stack.Peek() == '*' || stack.Peek() == '/')
-                        {
-                            // Добавляем знак и удаляем элемент из стека
-                            postResult += stack.Pop();
-                            i--;
-                        }
-                        else
-                        {
-                            if (thisEl == '+' || thisEl == '-')
-                            {
-                                // Добавляем знак и удаляем элемент из стека
-                                postResult += stack.Pop();
-
-                            }
-
-                            // Добавляем знак в стек
-                            stack.Push(thisEl);
-                        }
-                    }
+                    s.Pop();
                 }
                 else
                 {
-                    // Добавляем симовлы в стек
-                    postResult += thisEl;
+                    if (IsOperator(c))
+                    {
+                        while (s.Count != 0 && (Priority(s.Peek()) > Priority(c)))
+                        {
+                            outputList.Add(s.Pop());
+                        }
+                        s.Push(c);
+                    }
                 }
             }
 
-            for (int j = 0; j < stack.Count; j++)
+            while (s.Count != 0)
             {
-                // Добавляем остальные элементы в стеке в результат
-                postResult += stack.Pop();
+                outputList.Add(s.Pop());
             }
 
-            return true;
+            var prefix = string.Join("", outputList);
+            var prefixOut = prefix.Reverse();
+
+            return string.Join("", prefixOut);
         }
 
-        static void Main(string[] args)
+        private static string Postfix(char[] tokens)
+		{
+            Stack<char> s = new Stack<char>();
+            List<char> outputList = new List<char>();
+            foreach (var c in tokens)
+            {
+                if (char.IsLetterOrDigit(c))
+                {
+                    outputList.Add(c);
+                }
+                else if (c == '(')
+                {
+                    s.Push(c);
+                }
+                else if (c == ')')
+                {
+                    while (s.Count != 0 && (s.Peek() != '('))
+                    {
+                        outputList.Add(s.Pop());
+                    }
+                    s.Pop();
+                }
+                else
+                {
+                    if (IsOperator(c))
+                    {
+                        while (s.Count != 0 && (Priority(s.Peek()) >= Priority(c)))
+                        {
+                            outputList.Add(s.Pop());
+                        }
+                        s.Push(c);
+                    }
+                }
+            }
+
+            while (s.Count != 0)
+            {
+                outputList.Add(s.Pop());
+            }
+
+            return string.Join("", outputList);
+        }
+
+        static int Priority(char c)
         {
-            // Тестовое выражение
-            string expression = Console.ReadLine();
+            if (c == '^')
+            {
+                return 3;
+            }
+            else if (c == '*' || c == '/')
+            {
+                return 2;
+            }
+            else if (c == '+' || c == '-')
+            {
+                return 1;
+            }
+            else
+            {
+                return 0;
+            }
+        }
 
-            // Метод трансформации выражения
-            TransformationToPostfix(expression, out string postResult);
-
-            var preResultArr = postResult.ToCharArray();
-
-            // Инвертируем полученное выражение, для получения префиксной формы
-            Array.Reverse(preResultArr);
-
-            var preResult = new string(preResultArr);
-
-            // Инфиксное выражение 
-            Console.WriteLine("Инфиксное выражение: " + expression);
-
-            // Префиксное выражение
-            Console.WriteLine("Префиксное выражение: " + preResult);
-
-            // Постфиксное выражение
-            Console.WriteLine(" Постфиксное выражение: " + postResult);
+        static bool IsOperator(char c)
+        {
+            if (c == '+' || c == '-' || c == '*' || c == '/' || c == '^')
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }
