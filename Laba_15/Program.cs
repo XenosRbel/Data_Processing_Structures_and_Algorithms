@@ -42,7 +42,6 @@ namespace Laba_15
                 bTreeItems.Add(itemB);
             }
 
-
             // Создание дерева
             var BT = new BTree<int, int>(5);
 
