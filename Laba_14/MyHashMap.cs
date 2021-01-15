@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace Laba_14
 {
@@ -9,14 +11,17 @@ namespace Laba_14
 	{
 		public class MyHashMap<K, V>
         {
-            private Dictionary<int, IList<HashMap<K, V>>> _hashMaps = null;
+            private Dictionary<string, IList<HashMap<K, V>>> _hashMaps = null;
+            private const string FILEPATH = "HashTable.txt";
 
-            public IReadOnlyCollection<KeyValuePair<int, IList<HashMap<K, V>>>> HashMaps => _hashMaps?.ToList()?.AsReadOnly();
+            public IReadOnlyCollection<KeyValuePair<string, IList<HashMap<K, V>>>> HashMaps => _hashMaps?.ToList()?.AsReadOnly();
 
             public MyHashMap()
             {
+                File.Create(FILEPATH).Close();
+
                 // Инициализируем словарь
-                _hashMaps = new Dictionary<int, IList<HashMap<K, V>>>();
+                _hashMaps = new Dictionary<string, IList<HashMap<K, V>>>();
             }
 
             // Метод добавления новых значений в хеш-таблицу
@@ -53,6 +58,8 @@ namespace Laba_14
                     newHashMapList = new List<HashMap<K, V>> { newHashMapItem };
                     _hashMaps.Add(newHashMapHash, newHashMapList);
                 }
+
+                File.AppendAllText(FILEPATH, $"{key}:{newHashMapHash}:{newHashMapItem}\r");
             }
 
             // Метод для удаления по ключу
@@ -74,6 +81,8 @@ namespace Laba_14
                 {
                     oldHashTable.Remove(item);
                 }
+
+                File.WriteAllLines(FILEPATH, File.ReadAllLines(FILEPATH).Where(line => !line.Contains($"{key}:")));
             }
 
             public V Search(K key)
@@ -101,9 +110,10 @@ namespace Laba_14
                 return default(V);
             }
 
-            public int GetHash(K key)
+            public string GetHash(K key)
             {
-                return key.ToString().Length;
+                var hash = MD5Hash(key.ToString()).ConvertBytesToString();
+                return hash;
             }
 
             public void ShowHashTable(MyHashMap<K, V> hashTable, string title)
@@ -132,6 +142,11 @@ namespace Laba_14
                 File.WriteAllLines("output.txt", output);
                 Console.WriteLine();
             }
+
+            public static byte[] MD5Hash(string message)
+            {
+                return MD5.Create().ComputeHash(Encoding.UTF8.GetBytes(message));
+            }            
         }
     }
 }

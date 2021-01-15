@@ -34,7 +34,6 @@ namespace Laba_14
             // Результат после удаления
             Console.WriteLine("Результат после удаления: ");
             TestDictionary.ShowHashTable(TestDictionary, "nameTable");
-
         }
     }
 }
