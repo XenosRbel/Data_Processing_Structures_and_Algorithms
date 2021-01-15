@@ -24,7 +24,8 @@ namespace Laba_15
             }
 
             var bTreeItems = new List<BTreeItem>();
-            var treeData = fileLines.Split('\r');
+            var delimeters = new string[] { "\r\n", "\n", "\r" };
+            var treeData = fileLines.Split(delimeters, StringSplitOptions.RemoveEmptyEntries);
 
 			foreach (var line in treeData)
 			{
@@ -47,19 +48,23 @@ namespace Laba_15
 
 			Console.WriteLine("Ввод значений дерева. Сколько элементов загрузить? (От 10 до 15)");
             var N = Convert.ToInt32(Console.ReadLine());
-			Console.WriteLine($"{(N <= bTreeItems.Count ? "Размер верный" : "Ошибка размера")}");
+            var bTreeSize = bTreeItems.Sum(item => item.Values.Length);
+			Console.WriteLine($"{(N <= bTreeSize ? "Размер верный" : "Ошибка размера")}");
 
-			if (N <= bTreeItems.Count)
+			if (N <= bTreeSize)
 			{
-				foreach (var item in bTreeItems)
+				for (int i = 0; i < bTreeItems.Count; i++)
 				{
+                    var item = bTreeItems[i];
                     var values = item.Values;
 
-					foreach (var value in values)
+                    for (int j = 0; j < values.Length; j++)
 					{
+                        var value = values[j];
+
                         BT.Insert(value, item.Index);
                     }
-				}
+				}				
 
                 PrintTree(BT, "Начальное дерево: ");
 
