@@ -7,15 +7,15 @@ namespace Laba_15
 		public class Unit<TK, TP>
         {
             // Степень
-            private int power;
+            private readonly int _power;
 
             public Unit(int power)
             {
-                this.power = power;
+                _power = power;
 
-                this.Child = new List<Unit<TK, TP>>(power);
+                Child = new List<Unit<TK, TP>>(power);
 
-                this.Recordings = new List<Entry<TK, TP>>(power);
+                Recordings = new List<Entry<TK, TP>>(power);
             }
 
             public List<Unit<TK, TP>> Child { get; set; }
@@ -24,13 +24,13 @@ namespace Laba_15
             public List<Entry<TK, TP>> Recordings { get; set; }
 
             // Если это узел
-            public bool IsLeaf => this.Child.Count == 0;
+            public bool IsLeaf => Child.Count == 0;
 
             // Проверкам максимального значения
-            public bool MaxRecordings => this.Recordings.Count == (2 * this.power) - 1;
+            public bool MaxRecordings => Recordings.Count == (2 * _power) - 1;
 
             // Проверка, достижения минимального количества входных значений
-            public bool MinRecordings => this.Recordings.Count == this.power - 1;
+            public bool MinRecordings => Recordings.Count == _power - 1;
         }
 
     }

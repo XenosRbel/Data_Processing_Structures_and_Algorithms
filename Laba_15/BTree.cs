@@ -16,11 +16,12 @@ namespace Laba_15
                     throw new ArgumentException("Степень не менее 2-ух", "power");
                 }
 
-                this.Root = new Unit<TK, TP>(power);
+                Root = new Unit<TK, TP>(power);
 
-                this.Power = power;
+                Power = power;
 
-                this.Height = 1;
+                
+                Height = 1;
             }
 
             // Корень
