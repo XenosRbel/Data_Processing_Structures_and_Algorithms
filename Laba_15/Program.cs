@@ -68,11 +68,20 @@ namespace Laba_15
 
                 PrintTree(BT, "Начальное дерево: ");
 
+                Console.WriteLine("Введите элемент для добавления");
+                var forInsert = Convert.ToInt32(Console.ReadLine());
+                BT.Insert(forInsert, 1);
+                PrintTree(BT, "Начальное дерево: ");
+
+                Console.WriteLine("Введите элемент для добавления");
+                forInsert = Convert.ToInt32(Console.ReadLine());
+                BT.Insert(forInsert, 1);
+                PrintTree(BT, "Начальное дерево: ");
+
                 Console.WriteLine("Введите элемент для удаления");
                 var forDel = Convert.ToInt32(Console.ReadLine());
                 BT.Delete(forDel);
-
-                PrintTree(BT, $"\nДерево после удаления {forDel} элемента: ");
+                PrintTree(BT, $"\nДерево после удаления {forDel} элемента: ");             
             }         
         }
 

@@ -13,24 +13,12 @@ namespace Laba_13
 
             var matrixOfLinked = FillRandomMatrixOfRelationships(N, N, 1, 50);
 
-            int[,] a = new int[N, N];
             int[] d = new int[N];
             int[] v = new int[N]; // посещенные вершины
             int temp, minindex, min;
             int begin_index = 0;
             Console.WriteLine("Алгоритм Дейкстры");
-            // Инициализация матрицы связей
-            /*for (int i = 0; i < 6; i++)
-            {
-                a[i, i] = 0;
-                for (int j = i + 1; j < 6; j++)
-                {
-                    Console.Write($"Вводим расстояние {i + 1} - {j + 1}: ");
-                    temp = Convert.ToInt32(Console.ReadLine());
-                    a[i, j] = temp;
-                    a[j, i] = temp;
-                }
-            }*/
+    
             // Выводим матрицу связей
             matrixOfLinked.Print();
 
@@ -110,12 +98,6 @@ namespace Laba_13
 
             Console.WriteLine("Алгоритм Флойда");
             int[,] ShortestPath = FillRandomMatrixOfRelationships(N, N, 1, 10);
-
-            /*
-            for (int i = 0; i < n; i++)
-                for (int j = 0; j < n; j++)
-                    ShortestPath[i, j] = Convert.ToInt32(Console.ReadLine());
-            */
 
             int Max_Sum = 0;
             for (int i = 0; i < N; i++)

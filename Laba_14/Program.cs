@@ -7,6 +7,9 @@ namespace Laba_14
 	{
 		static void Main(string[] args)
 		{
+			Console.WriteLine("Введите слова для таблицы через пробел");
+            File.WriteAllText("input.txt", Console.ReadLine().Replace(' ', '\n'));
+
             // Инициилизируем хеш таблицу
             MyHashMap<int, string> TestDictionary = new MyHashMap<int, string>();
 
