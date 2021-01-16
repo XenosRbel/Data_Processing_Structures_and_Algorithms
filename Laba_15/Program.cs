@@ -81,7 +81,7 @@ namespace Laba_15
                 Console.WriteLine("Введите элемент для удаления");
                 var forDel = Convert.ToInt32(Console.ReadLine());
                 BT.Delete(forDel);
-                PrintTree(BT, $"\nДерево после удаления {forDel} элемента: ");             
+                PrintTree(BT, $"\nДерево после удаления {forDel} элемента: ");      
             }         
         }
 
